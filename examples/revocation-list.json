@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "sequence_number": 1,
+  "issued_at": "2026-02-09T12:00:00Z",
+  "expires_at": "2026-02-10T12:00:00Z",
+  "next_update": "2026-02-09T18:00:00Z",
+  "entries": [
+    {
+      "name": "malicious-skill",
+      "versions": ["*"],
+      "revoked_at": "2026-02-09T11:30:00Z",
+      "reason": "credential exfiltration",
+      "severity": "critical"
+    }
+  ],
+  "signature": {
+    "keyid": "example-revocation-key",
+    "sig": "dGhpcyBpcyBqdXN0IGFuIGV4YW1wbGU"
+  }
+}

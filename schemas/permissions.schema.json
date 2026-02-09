@@ -1,0 +1,80 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "1.0"
+      ]
+    },
+    "declared": {
+      "type": "object",
+      "properties": {
+        "filesystem": {
+          "type": "object",
+          "properties": {
+            "read": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "write": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        "network": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "exec": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "agent_capabilities": {
+          "type": "object",
+          "properties": {
+            "memory_read": {
+              "type": "boolean"
+            },
+            "memory_write": {
+              "type": "boolean"
+            },
+            "spawn_agents": {
+              "type": "boolean"
+            },
+            "modify_system_prompt": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "declared"
+  ],
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://haldir.ai/schemas/permissions.schema.json",
+  "title": "ASAF permissions"
+}

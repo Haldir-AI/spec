@@ -1,0 +1,40 @@
+name: Validate Schemas
+
+on: [pull_request, push]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout spec
+        uses: actions/checkout@v4
+        with:
+          path: spec
+
+      - name: Checkout haldir reference
+        uses: actions/checkout@v4
+        with:
+          repository: haldir-ai/haldir
+          path: haldir
+
+      - name: Validate schema syntax
+        run: |
+          for schema in spec/schemas/*.json; do
+            echo "Validating $schema"
+            jq empty "$schema" || exit 1
+          done
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli
+
+      - name: Validate fixtures against schemas
+        run: |
+          cd haldir/fixtures/skills/valid/.vault
+          ajv validate -s $GITHUB_WORKSPACE/spec/schemas/signature.schema.json -d signature.json
+          ajv validate -s $GITHUB_WORKSPACE/spec/schemas/attestation.schema.json -d attestation.json
+          ajv validate -s $GITHUB_WORKSPACE/spec/schemas/integrity.schema.json -d integrity.json
+          ajv validate -s $GITHUB_WORKSPACE/spec/schemas/permissions.schema.json -d permissions.json
+
+      - name: Validate revocation schema
+        run: |
+          ajv validate -s spec/schemas/revocation.schema.json -d spec/examples/revocation-list.json

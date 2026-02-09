@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "1.0"
+      ]
+    },
+    "payloadType": {
+      "type": "string",
+      "const": "application/vnd.haldir.attestation+json"
+    },
+    "payload": {
+      "type": "string",
+      "minLength": 1
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "keyid": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sig": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "keyid",
+          "sig"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "payloadType",
+    "payload",
+    "signatures"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://haldir.ai/schemas/signature.schema.json",
+  "title": "ASAF signature"
+}
