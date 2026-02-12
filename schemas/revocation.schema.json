@@ -9,8 +9,7 @@
     },
     "sequence_number": {
       "type": "integer",
-      "exclusiveMinimum": true,
-      "minimum": 0
+      "exclusiveMinimum": 0
     },
     "issued_at": {
       "type": "string",
