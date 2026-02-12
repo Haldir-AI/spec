@@ -128,7 +128,7 @@ The signature envelope follows DSSE v1.0.0 with one addition: `schema_version` f
 | `payload` | string | REQUIRED | base64url encoding (RFC 4648 Section 5, no padding) of the canonical JSON bytes of the attestation. |
 | `signatures` | array | REQUIRED | MUST contain at least one entry. Each entry has `keyid` (string, non-empty) and `sig` (string, non-empty). |
 
-**PAE Construction (DSSE v1.0.0):**
+**PAE Construction (DSSE-derived, Haldir-specific):**
 
 ```
 PAE(payloadType, payload) =
@@ -140,6 +140,8 @@ Where:
 - `LEN(s)` = ASCII decimal representation of the byte length of `s`
 - `payload` = raw payload bytes (pre-base64). The base64url encoding in the envelope is for transport only.
 - The signature is computed over the PAE output, NOT over the base64url string.
+
+> **Note:** The upstream DSSE v1.0.0 specification uses 8-byte little-endian integers for `LEN()`. Haldir uses ASCII decimal strings instead. This means Haldir envelopes are **not interoperable** with generic DSSE verifiers (sigstore, in-toto). Sign and verify within Haldir are consistent. The Sigstore keyless path uses the sigstore library's own PAE internally.
 
 The `signatures` array supports multiple entries for dual-sign scenarios (e.g., publisher + platform attestation). Implementations MUST support multiple entries. In v1.0, a single entry is typical.
 
