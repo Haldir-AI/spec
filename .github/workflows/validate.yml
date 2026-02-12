@@ -30,11 +30,11 @@ jobs:
       - name: Validate fixtures against schemas
         run: |
           cd haldir/fixtures/skills/valid/.vault
-          ajv validate -s $GITHUB_WORKSPACE/spec/schemas/signature.schema.json -d signature.json
-          ajv validate -s $GITHUB_WORKSPACE/spec/schemas/attestation.schema.json -d attestation.json
-          ajv validate -s $GITHUB_WORKSPACE/spec/schemas/integrity.schema.json -d integrity.json
-          ajv validate -s $GITHUB_WORKSPACE/spec/schemas/permissions.schema.json -d permissions.json
+          ajv validate --spec=draft2020 -s $GITHUB_WORKSPACE/spec/schemas/signature.schema.json -d signature.json
+          ajv validate --spec=draft2020 -s $GITHUB_WORKSPACE/spec/schemas/attestation.schema.json -d attestation.json
+          ajv validate --spec=draft2020 -s $GITHUB_WORKSPACE/spec/schemas/integrity.schema.json -d integrity.json
+          ajv validate --spec=draft2020 -s $GITHUB_WORKSPACE/spec/schemas/permissions.schema.json -d permissions.json
 
       - name: Validate revocation schema
         run: |
-          ajv validate -s spec/schemas/revocation.schema.json -d spec/examples/revocation-list.json
+          ajv validate --spec=draft2020 -s spec/schemas/revocation.schema.json -d spec/examples/revocation-list.json
